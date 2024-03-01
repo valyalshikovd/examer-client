@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import TokenFieldComponent from "./Components/TokenFieldComponent";
+import {useState} from "react";
+import ExamComponent from "./Components/ExamComponent";
+import AddExamComponent from "./Components/AddExamComponent";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [checkToken, SetCheckToken] = useState(false);
+    const [checkAddExam, SetCheckAddExam] = useState(false);
+    const [token, setToken] = useState('')
+
+    const handleSetToken = (value) => {
+        setToken(value)
+    }
+    const handleCheckToken = (checkToken) => (
+        SetCheckToken(!checkToken)
+    )
+    const handleCheckAddExam = (checkAddExam) => (
+        SetCheckAddExam(!checkAddExam)
+    )
+    return (
+        <div>
+            {checkToken ? (
+                <div>
+                    {checkAddExam ? (
+                        <AddExamComponent
+                            checkToken={checkToken}
+                            handleCheckToken={handleCheckToken}
+                            checkAddExam={checkAddExam}
+                            SetCheckAddExam={handleCheckAddExam}
+                            setToken={handleSetToken}
+                        />
+                    ) : (
+                        <ExamComponent token={token}></ExamComponent>
+                    )}
+                </div>
+            ) : (
+                <TokenFieldComponent checkToken={checkToken}
+                                     handleCheckToken={handleCheckToken}
+                                     checkAddExam={checkAddExam}
+                                     SetCheckAddExam={handleCheckAddExam}
+                                     setToken = {handleSetToken}>
+                </TokenFieldComponent>
+            )}
+        </div>
+    );
 }
 
 export default App;
