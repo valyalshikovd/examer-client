@@ -6,19 +6,31 @@ import AddExamComponent from "./AddExamComponent";
 import AddTaskComponent from "./AddTaskComponent";
 
 
-const ProjectComponent = (props) => {
+const ExamComponent = (props) => {
 
     const [tasks, setTasks] = useState([])
     const [clicked, setClicked] = useState(undefined)
     const [clickedAddButton, setClickedAddButton] = useState(false)
+    const [examId, setExamId] = useState(undefined)
+    const [examName, setExamName] = useState(false)
+
 
 
     useEffect(() => {
-        showTasks().then((dataAnswer) => {
-            setTasks(dataAnswer)
+        console.log("гойда")
+        showExamId().then((dataAnswer) => {
+            setExamId(dataAnswer.id)
+            setExamName(dataAnswer.name)
+        }).then( () => {
+            showTasks().then((dataAnswer) => {
+                setTasks(dataAnswer)
+            })
         })
-    }, []);
+    }, [clicked, clickedAddButton]);
 
+    const forseUpd = () => {
+        forseUpd()
+    }
     const handleSetClicked = (item) => {
         setClicked(item)
     }
@@ -28,15 +40,16 @@ const ProjectComponent = (props) => {
     }
 
     const handleClickedAddButton = () => {
-        setClickedAddButton(!clicked)
+        setClickedAddButton(true)
     }
 
-    const handleClickedAddButtonForComponents = (clicked) => {
-        setClickedAddButton(clicked)
+    const handleClickedAddButtonForComponents = () => {
+        console.log(clickedAddButton)
+        setClickedAddButton(!clickedAddButton)
         console.log("метод выполняется")
     }
     const showTasks = async () => {
-        const url = 'https://localhost:7242/api/task/all';
+        const url = 'http://127.0.0.1:8080/api/v1/task';
         let dataAnswer
         await fetch(url + "/" + props.token)
             .then(async response => {
@@ -45,6 +58,24 @@ const ProjectComponent = (props) => {
                 console.log(dataAnswer)
             })
             .catch((exception) => {
+                dataAnswer = undefined
+            })
+        return dataAnswer
+    }
+    const showExamId  = async () => {
+
+        const url = 'http://127.0.0.1:8080/api/v1/exam';
+        let dataAnswer
+        console.log(props)
+        console.log(url + "/" + props.token)
+        await fetch(url + "/" + props.token)
+            .then(async response => {
+                dataAnswer = await response.json();
+                console.log(dataAnswer)
+            })
+            .catch((exception) => {
+                console.log(props.token + " токен")
+                console.log(exception)
                 dataAnswer = undefined
             })
         return dataAnswer
@@ -64,7 +95,7 @@ const ProjectComponent = (props) => {
                         <div>
                             {
                                 clickedAddButton ? (
-                                        <AddTaskComponent token={props.token} count={tasks.length} changeClicked = {handleClickedAddButtonForComponents} clicked={clickedAddButton}  ></AddTaskComponent>
+                                        <AddTaskComponent token={props.token} count={tasks.length} examId = {examId} changeClicked = {handleClickedAddButtonForComponents} clicked={clickedAddButton} forseUpdate = {forseUpd}  ></AddTaskComponent>
                                     ) :
                                     (<div><Button fullWidth={true} onClick={handleClickedAddButton}>Добавить компонент</Button></div>)
                             }
@@ -86,4 +117,4 @@ const ProjectComponent = (props) => {
     )
 }
 
-export default ProjectComponent
+export default ExamComponent

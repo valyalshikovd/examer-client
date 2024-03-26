@@ -1,5 +1,5 @@
 import {Button, TextField} from "@material-ui/core";
-import {useState} from "react";
+import {useLayoutEffect, useState} from "react";
 import ImageUploaderComponent from "./ImageUploaderComponent";
 
 
@@ -8,11 +8,13 @@ const AddTaskComponent = (props) => {
 
     const [name, setName] = useState()
     const [text, setText] = useState()
+    const [description, setDescription] = useState()
     const [answer, setAnswer] = useState()
     const [image, setImage] = useState()
 
-    const handleSetImage = (image)=>{
+    const handleSetImage = (image) => {
         setImage(image)
+        console.log(image)
     }
 
     const handleSetName = (e) => {
@@ -21,25 +23,30 @@ const AddTaskComponent = (props) => {
     const handleSetText = (e) => {
         setText(e.target.value)
     }
+
+    const handleSetDescription = (e) => {
+        setDescription(e.target.value)
+    }
     const handleSetAnswer = (e) => {
         setAnswer(e.target.value)
     }
 
     const handleBack = () => {
-        props.changeClicked(false)
+        props.changeClicked()
     }
+
 
     const saveTask = () => {
 
 
-        const url = "https://localhost:7242/api/task/"
+        const url = "http://127.0.0.1:8080/api/v1/task"
         let data = JSON.stringify({
-            Name : name,
-            Number : props.count,
-            token : props.token,
-            text : text,
-            Answer : answer,
-            AnswerPhoto : image
+            examId: props.examId,
+            num: props.count,
+            question: text,
+            description: description,
+            answer: answer,
+            imageList: null
         })
 
         const options = {
@@ -53,22 +60,53 @@ const AddTaskComponent = (props) => {
 
         console.log(data)
         fetch(url, options)
-        .then( () => {
-            console.log("успешно")
-        })
+            .then(async (response) => {
+                let taskId = await response.json()
+                console.log(taskId)
+                saveImage(taskId.id)
 
-        handleBack()
+                handleBack()
+            })
 
+
+    }
+
+    const saveImage = (taskId) => {
+
+
+        console.log(typeof image)
+        const url = "http://127.0.0.1:8080/api/v1/images/addPhoto/" + taskId
+
+        console.log(image)
+        const formData = new FormData();
+
+        formData.append("file", image)
+        console.log(formData)
+
+        const options = {
+            method: 'POST',
+            body: formData
+        };
+
+
+        fetch(url, options).then(
+            (response) => {
+                console.log(response)
+            }
+        ).catch((reason) => {
+                console.log(reason)
+            }
+        )
     }
 
 
     return (
         <div className={"container"}>
             <div>
-                <div><TextField fullWidth={true} label={"Введите название"} value={name}
-                                onChange={handleSetName}/></div>
                 <div><TextField fullWidth={true} label={"Введите вопрос"} value={text}
                                 onChange={handleSetText}/></div>
+                <div><TextField fullWidth={true} label={"Введите описание"} value={description}
+                                onChange={handleSetDescription}/></div>
                 <div><TextField fullWidth={true} label={"введите ответ"} value={answer}
                                 onChange={handleSetAnswer}/></div>
                 <div><ImageUploaderComponent handleSetImage={handleSetImage}></ImageUploaderComponent></div>

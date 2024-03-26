@@ -9,6 +9,7 @@ function App() {
     const [token, setToken] = useState('')
 
     const handleSetToken = (value) => {
+        console.log("токен изменен на " + value)
         setToken(value)
     }
     const handleCheckToken = (checkToken) => (

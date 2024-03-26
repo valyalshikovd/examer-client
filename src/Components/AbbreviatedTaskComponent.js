@@ -12,7 +12,7 @@ const AbbreviatedTaskComponent = (props) => {
             {props.item.id}
         </div>
         <div>
-            {props.item.text}
+            {props.item.question}
         </div>
     </div>
     )

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 const ImageUploaderComponent = (props) => {
@@ -6,20 +6,19 @@ const ImageUploaderComponent = (props) => {
 
     const handleDrop = (e) => {
         e.preventDefault();
-        const file = e.dataTransfer.files[0];
-        const reader = new FileReader();
+        const file = e.dataTransfer.files[0]
+        const reader = new FileReader()
+
+        setImage(file)
+        props.handleSetImage(file)
 
         reader.onload = () => {
-            const base64String = reader.result.split(',')[1]; // Получаем строку Base64, удаляя "data:image/jpeg;base64,"
-            console.log(reader.result)
-            setImage(reader.result); // Устанавливаем строку Base64 как изображение
-
-            // Вызываем функцию handleSetImage и передаем ей строку Base64
-            props.handleSetImage(base64String);
-        };
-
-        reader.readAsDataURL(file);
+            setImage(reader.result)
+        }
+        reader.readAsDataURL(file)
     };
+
+
     const handleDragOver = (e) => {
         e.preventDefault()
     }

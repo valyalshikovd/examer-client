@@ -18,7 +18,7 @@ const TokenFieldComponent = (props) => {
     }
 
     const checkToken = async () => {
-        const url = 'https://localhost:7242/api/exam';
+        const url = 'http://localhost:8080/api/v1/exam';
         let dataAnswer
         await fetch(url + "/" + inputText)
             .then(async response => {

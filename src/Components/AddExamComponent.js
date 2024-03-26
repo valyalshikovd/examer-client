@@ -8,28 +8,21 @@ const AddExamComponent = (props) => {
     const [error, setError] = useState('')
 
 
-    const url = 'https://localhost:7242/api/exam';
+    const url = 'http://localhost:8080/api/v1/exam';
 
-    const data = {
-        Name : nameText,
-        token : token
-    };
 
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: nameText
     };
 
     const handleSetNameText = (event) => {
         setNameText(event.target.value)
     }
 
-    const handleSetToken = (event) => {
-        setToken(event.target.value)
-    }
 
     const handleBackButton = () => {
         props.handleCheckToken(props.checkToken)
@@ -37,7 +30,6 @@ const AddExamComponent = (props) => {
     }
 
     const registerNewExam = async () => {
-        console.log(url + "/" + token)
         let dataAnswer
         await fetch(url + "/" + token)
             .then(async response => {
@@ -46,27 +38,22 @@ const AddExamComponent = (props) => {
             .catch((exception) => {
                 dataAnswer = undefined
             })
-            .then( () => {
-                if (dataAnswer !== undefined){
-                    setError("проект с таким токеном уже существует")
-                    return
+            .then(() => {
+                    if (dataAnswer !== undefined) {
+                        setError("проект с таким токеном уже существует")
+                        return
+                    }
+                    fetch(url, options)
+                        .then(async response => {
+                           await response.text().then(
+                                (data) => {
+                                    props.setToken(data)
+                                    props.SetCheckAddExam(true)
+                                }
+                            );
+                        })
                 }
-                fetch(url, options)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                    })
-                    .then(data => {
-                        console.log('Response:', data);
-                    })
-                    .catch(error => {
-                        console.log(data)
-                        console.error('Error:', error);
-                    });
-                props.setToken(token)
-                props.SetCheckAddExam(true)
-            })
+            );
 
 
     }
@@ -77,10 +64,6 @@ const AddExamComponent = (props) => {
                             label={"введите название"}
                             value={nameText}
                             onChange={handleSetNameText}/></div>
-            <div><TextField fullWidth={true}
-                            label={"введите токен"}
-                            value={token}
-                            onChange={handleSetToken}/></div>
             <div><Button
                 fullWidth={true}
                 onClick={registerNewExam}>
@@ -91,9 +74,9 @@ const AddExamComponent = (props) => {
                 onClick={handleBackButton}>
                 назад
             </Button></div>
-            { error !== '' ? (
+            {error !== '' ? (
                 <ErrorString string={error}></ErrorString>
-            ) : (<div></div>) }
+            ) : (<div></div>)}
         </div>
     </div>)
 }
