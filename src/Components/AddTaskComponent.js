@@ -16,7 +16,6 @@ const AddTaskComponent = (props) => {
         setImage(image)
         console.log(image)
     }
-
     const handleSetName = (e) => {
         setName(e.target.value)
     }
@@ -57,14 +56,10 @@ const AddTaskComponent = (props) => {
             body: data
         };
 
-
-        console.log(data)
         fetch(url, options)
             .then(async (response) => {
                 let taskId = await response.json()
-                console.log(taskId)
                 saveImage(taskId.id)
-
                 handleBack()
             })
 
@@ -73,30 +68,14 @@ const AddTaskComponent = (props) => {
 
     const saveImage = (taskId) => {
 
-
-        console.log(typeof image)
         const url = "http://127.0.0.1:8080/api/v1/images/addPhoto/" + taskId
-
-        console.log(image)
         const formData = new FormData();
-
         formData.append("file", image)
-        console.log(formData)
-
         const options = {
             method: 'POST',
             body: formData
         };
-
-
-        fetch(url, options).then(
-            (response) => {
-                console.log(response)
-            }
-        ).catch((reason) => {
-                console.log(reason)
-            }
-        )
+        fetch(url, options)
     }
 
 

@@ -17,9 +17,8 @@ const TaskEdit = (props) => {
     }, []);
     const handleSetImage = (image) => {
         setImage(image)
-        console.log(image)
+        console.log("пикча вроде меняется")
     }
-
     const handleSetName = (e) => {
         setName(e.target.value)
     }
@@ -38,51 +37,65 @@ const TaskEdit = (props) => {
         props.handleBack()
     }
 
-
     const saveTask = () => {
-
-        const url = "http://127.0.0.1:8080/api/v1/task"
+        const url = "http://127.0.0.1:8080/api/v1/task/edit/" + props.item.id
         let data = JSON.stringify({
             examId: props.item.examId,
             num: props.item.num,
             question: text,
             description: description,
             answer: answer,
-            imageList:  props.imageId
+            imageList:  props.imageId,
+            date: props.item.date
         })
-
-        console.log(props)
-        console.log(data)
-
         const options = {
-            method: 'PATCH',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: data
         };
 
-
-        console.log(data)
+        let item
         fetch(url, options)
             .then(async (response) => {
-                let taskId = await response.json()
-                console.log(taskId)
-
-                if(image === null)
-                    return
-
-                saveImage(taskId.id)
-
+                item = await response.json()
+            }
+        ).then( () => {
+            if(image === null) {
+                props.updateItem(item)
                 handleBack()
-            })
-
-
-    }
-
-    const saveImage = (taskId) => {
-
-
+                return
+            }
+            const url = "http://127.0.0.1:8080/api/v1/images/" + props.imageId[1]
+            const options = {
+                method: 'DELETE'
+            };
+            fetch(url, options).then(
+                (response) => {
+                    console.log(response)
+                }
+            ).then(
+                () => {
+                    const formData = new FormData();
+                    formData.append("file", image)
+                    const options = {
+                        method: 'POST',
+                        body: formData
+                    };
+                    fetch("http://127.0.0.1:8080/api/v1/images/addPhoto/"+ props.item.id, options).then(
+                        (response) => {
+                            console.log(response)
+                        }
+                    ).then(
+                        () => {
+                            props.updateItem(item)
+                            handleBack()
+                        }
+                    )
+                }
+            )
+        })
     }
 
 

@@ -34,7 +34,6 @@ const TokenFieldComponent = (props) => {
                 }
                 props.SetCheckAddExam(true)
                 props.handleCheckToken(false)
-                console.log(props)
                 props.setToken(inputText)
             })
     }

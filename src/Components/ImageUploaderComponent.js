@@ -18,7 +18,6 @@ const ImageUploaderComponent = (props) => {
         reader.readAsDataURL(file)
     };
 
-
     const handleDragOver = (e) => {
         e.preventDefault()
     }
@@ -37,7 +36,6 @@ const ImageUploaderComponent = (props) => {
                         перетяните изображение сюда
                     </div>)
             }
-
         </div>
     )
 }
