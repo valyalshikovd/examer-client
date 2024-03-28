@@ -7,6 +7,7 @@ const TaskComponent = (props) => {
     const [updateCheck, setUpdateCheck] = useState(false)
     const [imageId, setImageId] = useState(null)
     const [item, setItem] = useState(props.item)
+    const [answerView, setAnswerView] = useState(false)
     const handleUpd = () => {
         setUpdateCheck(!updateCheck)
     }
@@ -17,6 +18,8 @@ const TaskComponent = (props) => {
 
     useEffect(() => {
 
+
+        setAnswerView(false)
         //код осуществляющий получение индексов фотографий и взвращает эти самые фотографии
 
         let url = "http://127.0.0.1:8080/api/v1/images/indicies/" + props.item.id
@@ -42,7 +45,7 @@ const TaskComponent = (props) => {
                 )
             }
         )
-    }, [item])
+    }, [item, props.item])
 
     return (
         <div>
@@ -61,11 +64,23 @@ const TaskComponent = (props) => {
                         <div><Button fullWidth={true} onClick={props.handleDeleteClicked}>назад</Button></div>
                         <div><Button fullWidth={true} onClick={handleUpd}>редактор</Button></div>
                         <div>
-                            {item.num}
-                            {item.question}
-                            {item.description}
-                            {item.answer}
-                            <img src={imageSrc} alt={"бля"}/>
+                            {props.item.num}
+                            {props.item.question}
+
+                            {
+                                answerView ? (<div>
+                                    {props.item.description}
+                                    {props.item.answer}
+                                    <img src={imageSrc} alt={"бля"}/>
+                                </div>) : (
+                                    <div onClick={() => {
+                                        setAnswerView(!answerView)
+                                    }}>
+                                        Ответ скрыт. Показать?
+                                    </div>
+                                )
+                            }
+
                         </div>
                     </div>
                 )
