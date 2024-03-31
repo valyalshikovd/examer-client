@@ -1,0 +1,25 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.task-component {
+    width: 100%;
+    background-color: #f0f0f0; /* Примерный фон */
+    margin-bottom: 20px; /* Примерное значение отступа */
+}
+
+.button-wrapper {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.shuffle-button {
+    margin-left: auto;
+    margin-right: auto;
+}

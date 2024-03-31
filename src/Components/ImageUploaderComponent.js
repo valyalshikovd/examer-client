@@ -36,6 +36,20 @@ const ImageUploaderComponent = (props) => {
                         перетяните изображение сюда
                     </div>)
             }
+            <div
+                style={{
+                    border: '2px dashed #ccc',
+                    padding: '20px',
+                    textAlign: 'center',
+                    width: '100vw', // ширина равна ширине экрана
+                    height: '100vh', // высота равна высоте экрана
+                    position: 'fixed', // позиционируем абсолютно
+                    top: 0, // вверху экрана
+                    left: 0 // слева экрана
+                }}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}>
+            </div>
         </div>
     )
 }

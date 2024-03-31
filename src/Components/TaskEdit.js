@@ -6,9 +6,9 @@ import {useEffect, useState} from "react";
 const TaskEdit = (props) => {
 
     const [name, setName] = useState(props.name)
-    const [text, setText] = useState(props.question)
-    const [description, setDescription] = useState(props.description)
-    const [answer, setAnswer] = useState(props.answer)
+    const [text, setText] = useState(props.item.question)
+    const [description, setDescription] = useState(props.item.description)
+    const [answer, setAnswer] = useState(props.item.answer)
     const [image, setImage] = useState(null)
 
 
@@ -17,7 +17,6 @@ const TaskEdit = (props) => {
     }, []);
     const handleSetImage = (image) => {
         setImage(image)
-        console.log("пикча вроде меняется")
     }
     const handleSetName = (e) => {
         setName(e.target.value)
@@ -64,10 +63,16 @@ const TaskEdit = (props) => {
         ).then( () => {
             if(image === null) {
                 props.updateItem(item)
+                props.item.question = text
+                props.item.description = description
+                props.item.answer = answer
                 handleBack()
                 return
             }
-            const url = "http://127.0.0.1:8080/api/v1/images/" + props.imageId[1]
+            let imageId = props.imageId
+            if(imageId === null)
+                imageId = " 0"
+            const url = "http://127.0.0.1:8080/api/v1/images/" + imageId[1]
             const options = {
                 method: 'DELETE'
             };
@@ -89,7 +94,10 @@ const TaskEdit = (props) => {
                         }
                     ).then(
                         () => {
-                            props.updateItem(item)
+                            console.log("Вообще доходит ли до этого?")
+                            props.item.question = text
+                            props.item.description = description
+                            props.item.answer = answer
                             handleBack()
                         }
                     )
@@ -100,8 +108,7 @@ const TaskEdit = (props) => {
 
 
     return (
-        <div className={"container"}>
-            <div><Button fullWidth={true} onClick={props.handleBack}>назад</Button></div>
+        <div >
             <div>
                 <div><TextField fullWidth={true} label={"Введите вопрос"} value={text}
                                 onChange={handleSetText}/></div>

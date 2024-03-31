@@ -7,9 +7,9 @@ const AddTaskComponent = (props) => {
 
 
     const [name, setName] = useState()
-    const [text, setText] = useState()
-    const [description, setDescription] = useState()
-    const [answer, setAnswer] = useState()
+    const [text, setText] = useState("")
+    const [description, setDescription] = useState("")
+    const [answer, setAnswer] = useState("")
     const [image, setImage] = useState()
 
     const handleSetImage = (image) => {
@@ -59,7 +59,9 @@ const AddTaskComponent = (props) => {
         fetch(url, options)
             .then(async (response) => {
                 let taskId = await response.json()
-                saveImage(taskId.id)
+                if(image !== undefined)
+                    saveImage(taskId.id)
+
                 handleBack()
             })
 

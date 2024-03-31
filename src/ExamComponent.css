@@ -1,0 +1,46 @@
+/* Header styles */
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+/* Component styles */
+.component-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 20px auto;
+    max-width: 80%;
+}
+
+.component-container div {
+    margin-bottom: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Button styles */
+.component-button {
+    width: calc(50% - 5px); /* Adjust as needed */
+}
+
+/* Task component styles */
+.task-container {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+}
+
+/* Token styles */
+.token {
+    font-weight: bold;
+    color: #007bff; /* Adjust color as needed */
+}
+

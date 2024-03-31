@@ -1,0 +1,61 @@
+.container {
+    display: flex;
+    flex-direction: column; /* Элементы будут располагаться в столбец */
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+
+}
+
+.button-wrapper-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px;
+}
+
+.button-wrapper-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+}
+.question {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.answer {
+    margin-bottom: 10px;
+}
+
+.hidden-answer {
+    color: #007bff;
+    cursor: pointer;
+}
+
+.hidden-answer:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+.image {
+    max-width: 100%; /* Максимальная ширина изображения */
+    max-height: 100%;
+    object-fit: cover; /* Масштабирование изображения с сохранением пропорций и обрезкой лишних частей */
+    margin-top: 10px;
+}
+
+.component{
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column; /* Элементы будут располагаться в столбец */
+    align-items: center;
+    max-width: 100%; /* Максимальная ширина изображения */
+    max-height: 100%;
+    object-fit: cover;
+
+}

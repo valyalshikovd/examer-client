@@ -1,12 +1,14 @@
 import React, {useState} from "react";
 import TaskComponent from "./TaskComponent";
 import {Button} from "@material-ui/core";
+import "../CarouselComponent.css"
+import ErrorString from "./ErrorString";
 
 
 const CarouselComponent = (props) => {
 
     const [tasks, setTasks] = useState(props.tasks.slice())
-    const [currentItemIndex, setCurrentItemIndex] = useState(0)
+    const [currentItemIndex, setCurrentItemIndex] = useState(1)
     const [currentItem, setCurrentItem] = useState(tasks[0])
 
     const handleShuffle = () => {
@@ -29,7 +31,7 @@ const CarouselComponent = (props) => {
     }
 
     const handlePrev = () => {
-        if(currentItemIndex === 0){
+        if (currentItemIndex === 0) {
             setCurrentItemIndex(tasks.length - 1)
             setCurrentItem(tasks[currentItemIndex])
             return
@@ -46,7 +48,7 @@ const CarouselComponent = (props) => {
         console.log(currentItem)
         console.log(currentItemIndex)
 
-        if(currentItemIndex === tasks.length - 1){
+        if (currentItemIndex === tasks.length - 1) {
             setCurrentItemIndex(0)
             setCurrentItem(tasks[currentItemIndex])
             return
@@ -56,14 +58,24 @@ const CarouselComponent = (props) => {
 
     }
 
-    return(
+    return (
         <div>
-            <div><Button fullWidth={true} onClick={handleShuffle}>перемешать</Button></div>
-            <div><Button fullWidth={true} onClick={handlePrev}>prev</Button></div>
-            <div><Button fullWidth={true} onClick={handleNext}>next</Button></div>
-            <TaskComponent item={currentItem}
-                           handleDeleteClicked={handleDeleteClicked}
-            ></TaskComponent>
+            <div>
+                <div className={"parent-container"}>
+                    <div><Button fullWidth={true} onClick={handlePrev}>Пред.</Button></div>
+                    <div><Button fullWidth={true} onClick={handleShuffle}>Перемешать</Button></div>
+                    <div><Button fullWidth={true} onClick={handleNext}>Cлед.</Button></div>
+                </div>
+                {
+                    0 !== tasks.length ? (<div><TaskComponent item={currentItem}
+                                                              handleDeleteClicked={handleDeleteClicked}
+                    ></TaskComponent></div>) : (
+                        <div>
+                            <div><Button fullWidth={true} onClick={handleDeleteClicked}><ErrorString string={"Список пуст"}></ErrorString></Button></div>
+                        </div>
+                    )
+                }
+            </div>
         </div>
     )
 }

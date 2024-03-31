@@ -5,7 +5,7 @@ import {Button} from "@material-ui/core";
 import AddExamComponent from "./AddExamComponent";
 import AddTaskComponent from "./AddTaskComponent";
 import CarouselComponent from "./СarouselComponent";
-
+import "../ExamComponent.css"
 
 const ExamComponent = (props) => {
 
@@ -27,15 +27,17 @@ const ExamComponent = (props) => {
                 setTasks(dataAnswer)
             })
         })
-    }, [clicked, clickedAddButton, upd]);
-    const handleUpdate = () => {
+    }, [ clickedAddButton, upd]);
+
+
+    const  handleUpd = () => {
         setUpd(!upd)
     }
-
     const handleCarousel = () => {
         setCarouselMode(!carouselMode)
     }
     const handleSetClicked = (item) => {
+        console.log(clicked)
         setClicked(item)
     }
 
@@ -48,6 +50,11 @@ const ExamComponent = (props) => {
     }
     const handleClickedAddButtonForComponents = () => {
         setClickedAddButton(!clickedAddButton)
+    }
+    const updateList = () => {
+        console.log("команда на обновление")
+        setUpd(!upd)
+        setTasks(tasks)
     }
     const showTasks = async () => {
         const url = 'http://127.0.0.1:8080/api/v1/task';
@@ -77,17 +84,9 @@ const ExamComponent = (props) => {
 
     return (
         <div>
-            {carouselMode ? (
+            {!carouselMode ? (
                 <div>
-                    {
-                        clicked !== undefined ? (
-                                <div>
-                                    <TaskComponent item={clicked}
-                                                   handleDeleteClicked={handleDeleteClicked}
-                                    ></TaskComponent>
-                                </div>)
-                            :
-                            (
+
                                 <div>
                                     {
                                         clickedAddButton ? (
@@ -98,30 +97,55 @@ const ExamComponent = (props) => {
                                                                   clicked={clickedAddButton}
                                                 ></AddTaskComponent>
                                             ) :
-                                            (<div><Button fullWidth={true} onClick={handleClickedAddButton}>Добавить
-                                                компонент</Button></div>)
+                                            (
+                                                <div>
+                                                    <header>
+                                                        <div>{examName}</div>
+                                                        <div>Токен {props.token} </div>
+                                                    </header>
+                                                    <div className={"component-container"}>
+                                                        <div className={"button-container"}>
+                                                    <div><Button fullWidth={true} onClick={handleClickedAddButton}>Добавить
+                                                        таск</Button></div>
+
+                                                    <Button fullWidth={true} onClick={handleCarousel}>Показывать по одному</Button>
+                                                        </div>
+                                                    {tasks !== undefined ? (
+                                                        <div>
+                                                            {tasks.map((item, index) => (
+                                                                    <div >
+
+                                                                        {
+                                                                            item === clicked ? (
+                                                                                <TaskComponent item={clicked}
+                                                                                               handleDeleteClicked={handleDeleteClicked}
+                                                                                               updateTaskList = {updateList}
+                                                                                ></TaskComponent>
+                                                                            ) : (
+                                                                                <AbbreviatedTaskComponent item={item}
+                                                                                                          handleUpdate={updateList}
+                                                                                                          handleReboot={handleUpd}
+                                                                                                          handleSetClicked={handleSetClicked}
+                                                                                ></AbbreviatedTaskComponent>
+                                                                            )
+                                                                        }
+
+                                                                    </div>
+                                                                )
+                                                            )}
+                                                        </div>
+                                                    ) : (<div>Задачи отсутствуют</div>)}
+                                                    </div>
+                                                </div>)
                                     }
-                                    <Button fullWidth={true} onClick={handleCarousel}>Отключить отображения списка</Button>
-                                    {tasks !== undefined ? (
-                                        <div>
-                                            {tasks.map((item, index) => (
-                                                    <div><AbbreviatedTaskComponent item={item}
-                                                                                   handleUpdate={handleUpdate}
-                                                                                   handleSetClicked={handleSetClicked}
-                                                    ></AbbreviatedTaskComponent></div>
-                                                )
-                                            )}
-                                        </div>
-                                    ) : (<div>Задачи отсутствуют</div>)}
                                 </div>
-                            )
-                    }
+
                 </div>
             ) : (
                 <div>
                     <CarouselComponent
                         tasks={tasks}
-                        carouselMode = {handleCarousel}
+                        carouselMode={handleCarousel}
                     >
 
                     </CarouselComponent>

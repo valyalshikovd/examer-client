@@ -1,6 +1,7 @@
 import {Button} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import TaskEdit from "./TaskEdit";
+import "../TaskComponent.css"
 
 const TaskComponent = (props) => {
     const [imageSrc, setImageSrc] = useState('')
@@ -18,6 +19,7 @@ const TaskComponent = (props) => {
 
     useEffect(() => {
 
+        setImageSrc('')
 
         setAnswerView(false)
         //код осуществляющий получение индексов фотографий и взвращает эти самые фотографии
@@ -31,6 +33,8 @@ const TaskComponent = (props) => {
             }
         ).then(
             () => {
+                if (imageId[1] === "]")
+                    return
                 url = "http://127.0.0.1:8080/api/v1/images/" + imageId[1]
                 setImageId(imageId)
                 fetch(url).then(
@@ -45,10 +49,10 @@ const TaskComponent = (props) => {
                 )
             }
         )
-    }, [item, props.item])
+    }, [item, props.item, updateCheck])
 
     return (
-        <div>
+        <div className={"container"}>
             {
                 updateCheck ? (
                     <div>
@@ -57,26 +61,37 @@ const TaskComponent = (props) => {
                                   imageId={imageId}
                                   upd={props.forceUpdate}
                                   updateItem={updateItem}
+                                  updateList = {props.updateTaskList}
                         ></TaskEdit>
                     </div>
                 ) : (
-                    <div>
-                        <div><Button fullWidth={true} onClick={props.handleDeleteClicked}>назад</Button></div>
-                        <div><Button fullWidth={true} onClick={handleUpd}>редактор</Button></div>
-                        <div>
-                            {props.item.num}
-                            {props.item.question}
-
+                    <div style={{overflow : "auto"}}>
+                        <div className={"button-wrapper-right"}>
+                            <div><Button fullWidth={true} onClick={props.handleDeleteClicked}>назад</Button></div>
+                        </div>
+                        <div className={"button-wrapper-left"}>
+                            <div><Button fullWidth={true} onClick={handleUpd}>редактор</Button></div>
+                        </div>
+                        <div className={"component"}>
+                            <div className={"question"}>
+                                #{props.item.num + 1} {props.item.question}
+                            </div>
                             {
-                                answerView ? (<div>
-                                    {props.item.description}
-                                    {props.item.answer}
-                                    <img src={imageSrc} alt={"бля"}/>
+                                answerView ? (<div >
+                                    <div className={"answer"}>
+                                        <p>{props.item.description}</p>
+                                        <p>{props.item.answer}</p>
+                                    </div>
+                                    {
+                                        imageSrc !== '' ? (<img className={"image"} src={imageSrc}/>) : (<div></div>)
+                                    }
                                 </div>) : (
                                     <div onClick={() => {
                                         setAnswerView(!answerView)
                                     }}>
-                                        Ответ скрыт. Показать?
+                                        <div className={"hidden-answer"}>
+                                            Ответ скрыт. Показать?
+                                        </div>
                                     </div>
                                 )
                             }
