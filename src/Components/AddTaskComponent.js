@@ -1,7 +1,7 @@
 import {Button, TextField} from "@material-ui/core";
 import {useLayoutEffect, useState} from "react";
 import ImageUploaderComponent from "./ImageUploaderComponent";
-
+import backend_url from "../index";
 
 const AddTaskComponent = (props) => {
 
@@ -38,7 +38,7 @@ const AddTaskComponent = (props) => {
     const saveTask = () => {
 
 
-        const url = "http://127.0.0.1:8080/api/v1/task"
+        const url = backend_url +"task"
         let data = JSON.stringify({
             examId: props.examId,
             num: props.count,
@@ -70,7 +70,7 @@ const AddTaskComponent = (props) => {
 
     const saveImage = (taskId) => {
 
-        const url = "http://127.0.0.1:8080/api/v1/images/addPhoto/" + taskId
+        const url = backend_url +"/images/addPhoto/" + taskId
         const formData = new FormData();
         formData.append("file", image)
         const options = {
@@ -84,11 +84,11 @@ const AddTaskComponent = (props) => {
     return (
         <div className={"container"}>
             <div>
-                <div><TextField fullWidth={true} label={"Введите вопрос"} value={text}
+                <div className={"z-index"}><TextField fullWidth={true} label={"Введите вопрос"}  value={text}
                                 onChange={handleSetText}/></div>
-                <div><TextField fullWidth={true} label={"Введите описание"} value={description}
+                <div className={"z-index"}><TextField fullWidth={true} label={"Введите описание"} value={description}
                                 onChange={handleSetDescription}/></div>
-                <div><TextField fullWidth={true} label={"введите ответ"} value={answer}
+                <div className={"z-index"}><TextField fullWidth={true} label={"введите ответ"} value={answer}
                                 onChange={handleSetAnswer}/></div>
                 <div><ImageUploaderComponent handleSetImage={handleSetImage}></ImageUploaderComponent></div>
                 <div><Button fullWidth={true} onClick={saveTask}>сохранить</Button></div>

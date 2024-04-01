@@ -2,7 +2,7 @@ import {TextField, Button} from "@material-ui/core";
 import "../TokenField.css"
 import {useState} from "react";
 import ErrorString from "./ErrorString";
-
+import backend_url from "../index";
 const TokenFieldComponent = (props) => {
 
     const [inputText, SetInputText] = useState('')
@@ -18,7 +18,7 @@ const TokenFieldComponent = (props) => {
     }
 
     const checkToken = async () => {
-        const url = 'http://localhost:8080/api/v1/exam';
+        const url = backend_url + 'exam';
         let dataAnswer
         await fetch(url + "/" + inputText)
             .then(async response => {

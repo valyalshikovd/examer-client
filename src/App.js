@@ -1,48 +1,21 @@
-import TokenFieldComponent from "./Components/TokenFieldComponent";
-import {useState} from "react";
+import {BrowserRouter, Route, Link, Routes, useParams} from 'react-router-dom';
+import Home from "./Components/Home";
 import ExamComponent from "./Components/ExamComponent";
-import AddExamComponent from "./Components/AddExamComponent";
 
 function App() {
-    const [checkToken, SetCheckToken] = useState(false);
-    const [checkAddExam, SetCheckAddExam] = useState(false);
-    const [token, setToken] = useState('')
 
-    const handleSetToken = (value) => {
-        console.log("токен изменен на " + value)
-        setToken(value)
-    }
-    const handleCheckToken = (checkToken) => (
-        SetCheckToken(!checkToken)
-    )
-    const handleCheckAddExam = (checkAddExam) => (
-        SetCheckAddExam(!checkAddExam)
-    )
+    const TokenExam = () => {
+        const { token } = useParams();
+        return (<div><ExamComponent token={token}/></div>)
+    };
     return (
         <div>
-
-            {checkToken ? (
-                <div>
-                    {checkAddExam ? (
-                        <AddExamComponent
-                            checkToken={checkToken}
-                            handleCheckToken={handleCheckToken}
-                            checkAddExam={checkAddExam}
-                            SetCheckAddExam={handleCheckAddExam}
-                            setToken={handleSetToken}
-                        />
-                    ) : (
-                        <ExamComponent token={token}></ExamComponent>
-                    )}
-                </div>
-            ) : (
-                <TokenFieldComponent checkToken={checkToken}
-                                     handleCheckToken={handleCheckToken}
-                                     checkAddExam={checkAddExam}
-                                     SetCheckAddExam={handleCheckAddExam}
-                                     setToken = {handleSetToken}>
-                </TokenFieldComponent>
-            )}
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/"  element={<Home/>}/>
+                    <Route path="/token/:token"  element={ <TokenExam/>}/>
+                </Routes>
+            </BrowserRouter>
         </div>
     );
 }

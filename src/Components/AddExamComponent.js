@@ -1,14 +1,14 @@
 import {Button, TextField} from "@material-ui/core";
 import {useState} from "react";
 import ErrorString from "./ErrorString";
-
+import backend_url from "../index";
 const AddExamComponent = (props) => {
     const [nameText, setNameText] = useState('')
     const [token, setToken] = useState('')
     const [error, setError] = useState('')
 
 
-    const url = 'http://localhost:8080/api/v1/exam';
+    const url = backend_url +'exam';
 
 
     const options = {

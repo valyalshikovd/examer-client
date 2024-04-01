@@ -6,7 +6,7 @@ import AddExamComponent from "./AddExamComponent";
 import AddTaskComponent from "./AddTaskComponent";
 import CarouselComponent from "./СarouselComponent";
 import "../ExamComponent.css"
-
+import backend_url from "../index";
 const ExamComponent = (props) => {
 
     const [tasks, setTasks] = useState([])
@@ -57,7 +57,7 @@ const ExamComponent = (props) => {
         setTasks(tasks)
     }
     const showTasks = async () => {
-        const url = 'http://127.0.0.1:8080/api/v1/task';
+        const url = backend_url +'task';
         let dataAnswer
         await fetch(url + "/" + props.token)
             .then(async response => {
@@ -69,7 +69,7 @@ const ExamComponent = (props) => {
         return dataAnswer
     }
     const showExamId = async () => {
-        const url = 'http://127.0.0.1:8080/api/v1/exam';
+        const url = backend_url +'exam';
         let dataAnswer
         await fetch(url + "/" + props.token)
             .then(async response => {

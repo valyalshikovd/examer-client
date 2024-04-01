@@ -1,7 +1,7 @@
 import ImageUploaderComponent from "./ImageUploaderComponent";
 import {Button, TextField} from "@material-ui/core";
 import {useEffect, useState} from "react";
-
+import backend_url from "../index";
 
 const TaskEdit = (props) => {
 
@@ -37,7 +37,7 @@ const TaskEdit = (props) => {
     }
 
     const saveTask = () => {
-        const url = "http://127.0.0.1:8080/api/v1/task/edit/" + props.item.id
+        const url = backend_url + "task/edit/" + props.item.id
         let data = JSON.stringify({
             examId: props.item.examId,
             num: props.item.num,
@@ -72,7 +72,7 @@ const TaskEdit = (props) => {
             let imageId = props.imageId
             if(imageId === null)
                 imageId = " 0"
-            const url = "http://127.0.0.1:8080/api/v1/images/" + imageId[1]
+            const url = backend_url + "images/" + imageId[1]
             const options = {
                 method: 'DELETE'
             };
@@ -88,7 +88,7 @@ const TaskEdit = (props) => {
                         method: 'POST',
                         body: formData
                     };
-                    fetch("http://127.0.0.1:8080/api/v1/images/addPhoto/"+ props.item.id, options).then(
+                    fetch(backend_url +"images/addPhoto/"+ props.item.id, options).then(
                         (response) => {
                             console.log(response)
                         }

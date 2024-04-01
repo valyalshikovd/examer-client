@@ -39,45 +39,41 @@ const CarouselComponent = (props) => {
         setCurrentItemIndex(currentItemIndex - 1)
         setCurrentItem(tasks[currentItemIndex])
 
-        console.log(currentItem)
-        console.log(currentItemIndex)
-    }
 
-    const handleNext = () => {
+        const handleNext = () => {
 
-        console.log(currentItem)
-        console.log(currentItemIndex)
 
-        if (currentItemIndex === tasks.length - 1) {
-            setCurrentItemIndex(0)
+            if (currentItemIndex === tasks.length - 1) {
+                setCurrentItemIndex(0)
+                setCurrentItem(tasks[currentItemIndex])
+                return
+            }
+            setCurrentItemIndex(currentItemIndex + 1)
             setCurrentItem(tasks[currentItemIndex])
-            return
+
         }
-        setCurrentItemIndex(currentItemIndex + 1)
-        setCurrentItem(tasks[currentItemIndex])
 
-    }
-
-    return (
-        <div>
+        return (
             <div>
-                <div className={"parent-container"}>
-                    <div><Button fullWidth={true} onClick={handlePrev}>Пред.</Button></div>
-                    <div><Button fullWidth={true} onClick={handleShuffle}>Перемешать</Button></div>
-                    <div><Button fullWidth={true} onClick={handleNext}>Cлед.</Button></div>
+                <div>
+                    <div className={"parent-container"}>
+                        <div><Button fullWidth={true} onClick={handlePrev}>Пред.</Button></div>
+                        <div><Button fullWidth={true} onClick={handleShuffle}>Перемешать</Button></div>
+                        <div><Button fullWidth={true} onClick={handleNext}>Cлед.</Button></div>
+                    </div>
+                    {
+                        0 !== tasks.length ? (<div><TaskComponent item={currentItem}
+                                                                  handleDeleteClicked={handleDeleteClicked}
+                        ></TaskComponent></div>) : (
+                            <div>
+                                <div><Button fullWidth={true} onClick={handleDeleteClicked}><ErrorString
+                                    string={"Список пуст"}></ErrorString></Button></div>
+                            </div>
+                        )
+                    }
                 </div>
-                {
-                    0 !== tasks.length ? (<div><TaskComponent item={currentItem}
-                                                              handleDeleteClicked={handleDeleteClicked}
-                    ></TaskComponent></div>) : (
-                        <div>
-                            <div><Button fullWidth={true} onClick={handleDeleteClicked}><ErrorString string={"Список пуст"}></ErrorString></Button></div>
-                        </div>
-                    )
-                }
             </div>
-        </div>
-    )
+        )
+    }
 }
-
 export default CarouselComponent

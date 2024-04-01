@@ -2,7 +2,7 @@ import {Button} from "@material-ui/core";
 import {useEffect, useState} from "react";
 import TaskEdit from "./TaskEdit";
 import "../TaskComponent.css"
-
+import backend_url from "../index";
 const TaskComponent = (props) => {
     const [imageSrc, setImageSrc] = useState('')
     const [updateCheck, setUpdateCheck] = useState(false)
@@ -24,7 +24,7 @@ const TaskComponent = (props) => {
         setAnswerView(false)
         //код осуществляющий получение индексов фотографий и взвращает эти самые фотографии
 
-        let url = "http://127.0.0.1:8080/api/v1/images/indicies/" + props.item.id
+        let url = backend_url +"images/indicies/" + props.item.id
         let imageId
 
         fetch(url).then(
@@ -35,7 +35,7 @@ const TaskComponent = (props) => {
             () => {
                 if (imageId[1] === "]")
                     return
-                url = "http://127.0.0.1:8080/api/v1/images/" + imageId[1]
+                url = backend_url + "images/" + imageId[1]
                 setImageId(imageId)
                 fetch(url).then(
                     (response) => {

@@ -1,5 +1,7 @@
 import {Button} from "@material-ui/core";
 import "../AbbreviatedTaskComponent.css"
+import backend_url from "../index";
+
 
 const AbbreviatedTaskComponent = (props) => {
 
@@ -12,7 +14,7 @@ const AbbreviatedTaskComponent = (props) => {
 
         event.stopPropagation();
 
-        const url = "http://127.0.0.1:8080/api/v1/task/" + props.item.id
+        const url = backend_url +"task/" + props.item.id
         const options = {
             method: 'DELETE',
             headers: {
