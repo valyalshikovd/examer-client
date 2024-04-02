@@ -39,6 +39,7 @@ const AddExamComponent = (props) => {
             })
             .catch((exception) => {
                 dataAnswer = undefined
+                console.log(exception)
             })
             .then(() => {
                     if (dataAnswer !== undefined) {
