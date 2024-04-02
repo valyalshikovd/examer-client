@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import AbbreviatedTaskComponent from "./AbbreviatedTaskComponent";
 import TaskComponent from "./TaskComponent";
-import {Button} from "@material-ui/core";
+import {Button} from "@mui/material";
 import AddExamComponent from "./AddExamComponent";
 import AddTaskComponent from "./AddTaskComponent";
 import CarouselComponent from "./СarouselComponent";

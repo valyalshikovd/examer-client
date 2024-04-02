@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import TaskComponent from "./TaskComponent";
-import {Button} from "@material-ui/core";
+import {Button} from "@mui/material";
 import "../CarouselComponent.css"
 import ErrorString from "./ErrorString";
 

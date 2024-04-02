@@ -1,4 +1,6 @@
-import {Button, TextField} from "@material-ui/core";
+
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
 import {useState} from "react";
 import ErrorString from "./ErrorString";
 import backend_url from "../index";

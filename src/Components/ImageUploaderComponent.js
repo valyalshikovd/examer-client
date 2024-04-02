@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Button} from "@material-ui/core";
+import {Button} from "@mui/material";
 import backend_url from "../index";
 
 const ImageUploaderComponent = (props) => {

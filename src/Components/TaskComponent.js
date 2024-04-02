@@ -1,4 +1,4 @@
-import {Button} from "@material-ui/core";
+import {Button} from "@mui/material";
 import {useEffect, useState} from "react";
 import TaskEdit from "./TaskEdit";
 import "../TaskComponent.css"

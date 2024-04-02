@@ -1,5 +1,6 @@
 import ImageUploaderComponent from "./ImageUploaderComponent";
-import {Button, TextField} from "@material-ui/core";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import {useEffect, useState} from "react";
 import backend_url from "../index";
 

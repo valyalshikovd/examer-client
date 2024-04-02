@@ -1,4 +1,4 @@
-import {Button} from "@material-ui/core";
+import Button from "@mui/material/Button";
 import "../AbbreviatedTaskComponent.css"
 import backend_url from "../index";
 
