@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import AbbreviatedTaskComponent from "./AbbreviatedTaskComponent";
 import TaskComponent from "./TaskComponent";
 import {Button} from "@mui/material";
-import AddExamComponent from "./AddExamComponent";
 import AddTaskComponent from "./AddTaskComponent";
 import CarouselComponent from "./СarouselComponent";
 import "../ExamComponent.css"
@@ -34,6 +33,7 @@ const ExamComponent = (props) => {
         setUpd(!upd)
     }
     const handleCarousel = () => {
+        console.log("меняется режим отображения")
         setCarouselMode(!carouselMode)
     }
     const handleSetClicked = (item) => {
@@ -139,16 +139,13 @@ const ExamComponent = (props) => {
                                                 </div>)
                                     }
                                 </div>
-
                 </div>
             ) : (
                 <div>
                     <CarouselComponent
                         tasks={tasks}
                         carouselMode={handleCarousel}
-                    >
-
-                    </CarouselComponent>
+                    />
                 </div>
             )}
         </div>
