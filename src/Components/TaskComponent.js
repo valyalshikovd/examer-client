@@ -33,10 +33,15 @@ const TaskComponent = (props) => {
             }
         ).then(
             () => {
+
+                var pattern = /\[(\d+)\]/;
+                var match = imageId.match(pattern);
+                console.log(imageId[2])
                 if (imageId[1] === "]")
                     return
-                url = backend_url + "images/" + imageId[1]
-                setImageId(imageId)
+                url = backend_url + "images/" + match[1]
+                console.log(match[1])
+                setImageId(match[1])
                 fetch(url).then(
                     (response) => {
                         return response.blob();

@@ -57,10 +57,11 @@ const AddTaskComponent = (props) => {
             },
             body: data
         };
-
+        let taskId
         fetch(url, options)
             .then(async (response) => {
-                let taskId = await response.json()
+                taskId = await response.json()
+
                 if(image !== undefined)
                     saveImage(taskId.id)
 
@@ -72,14 +73,18 @@ const AddTaskComponent = (props) => {
 
     const saveImage = (taskId) => {
 
-        const url = backend_url +"/images/addPhoto/" + taskId
+        const url = backend_url +"images/addPhoto/" + taskId
         const formData = new FormData();
         formData.append("file", image)
         const options = {
             method: 'POST',
             body: formData
         };
-        fetch(url, options)
+        fetch(url, options).catch(
+            reason => {
+                console.log(reason)
+            }
+        )
     }
 
 
